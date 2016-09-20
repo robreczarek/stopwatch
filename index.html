@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
-    <title>Stopwatch</title>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <script type="text/javascript">
-      
-    </script>
-  </head>
+        <title>Stopwatch</title>
+        <style type="text/css">
+            #ui-buttons {
+                margin-top: 10px;
+            }
+        </style>
 
-  <body>
-    <div class="container">
-      <h1>Stopwatch</h1>
-      <p class="lead">Start and stop</p>
+        <script type="text/javascript">
+            function Timer() {
+            }
 
-      <span id="time">00:00:00</span>
+            Timer.prototype.getTime = function() {
+                var date = new Date();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                var milliseconds = date.getMilliseconds();
+                var time = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+                return time;
+            };
 
-      <button id="start">Start</button>
 
-      <button id="stop">Stop</button>
+            window.onload = function() {
+                var timer = new Timer();
+                var btn_resume = document.getElementById("ui-resume");
+                var btn_stop = document.getElementById("ui-stop");
+                var lbl_time = document.getElementById("ui-time");
 
-      <button id="reset">Reset</button>
+                var interval = window.setInterval(function() { lbl_time.innerHTML = timer.getTime(); }, 1);
 
-    </div>
+                btn_resume.onclick = function() {
+                    interval = window.setInterval(function() { lbl_time.innerHTML = timer.getTime(); }, 1);
+                    lbl_time.innerHTML = timer.getTime();
+                };
 
-  </body>
+                btn_stop.onclick = function() {
+                    window.clearInterval(interval);
+                };
+
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Timer</h1>
+            <p class="lead">Stop and resume</p>
+
+            <div id="ui-time"></div>
+
+            <div id="ui-buttons">
+
+                <button id="ui-stop">Stop</button>
+                <button id="ui-resume">Resume</button>
+
+            </div>
+
+        </div>
+
+    </body>
 </html>
 
