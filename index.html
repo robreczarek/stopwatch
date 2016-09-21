@@ -1,55 +1,13 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+        <script type="text/javascript" src="./index.js"></script>
         <title>Stopwatch</title>
-        <style type="text/css">
-            #ui-buttons {
-                margin-top: 10px;
-            }
-        </style>
-
-        <script type="text/javascript">
-            function Timer() {
-            }
-
-            Timer.prototype.getTime = function() {
-                var date = new Date();
-                var hours = date.getHours();
-                var minutes = date.getMinutes();
-                var seconds = date.getSeconds();
-                var milliseconds = date.getMilliseconds();
-                var time = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-                return time;
-            };
-
-
-            window.onload = function() {
-                var timer = new Timer();
-                var btn_resume = document.getElementById("ui-resume");
-                var btn_stop = document.getElementById("ui-stop");
-                var lbl_time = document.getElementById("ui-time");
-
-                var interval = window.setInterval(function() { lbl_time.innerHTML = timer.getTime(); }, 1);
-
-                btn_resume.onclick = function() {
-                    interval = window.setInterval(function() { lbl_time.innerHTML = timer.getTime(); }, 1);
-                    lbl_time.innerHTML = timer.getTime();
-                };
-
-                btn_stop.onclick = function() {
-                    window.clearInterval(interval);
-                };
-
-            }
-
-        </script>
     </head>
-
     <body>
         <div class="container">
             <h1>Timer</h1>
@@ -57,7 +15,7 @@
 
             <div id="ui-time"></div>
 
-            <div id="ui-buttons">
+            <div id="ui-buttons" style="margin-top: 10px;">
 
                 <button id="ui-stop">Stop</button>
                 <button id="ui-resume">Resume</button>
