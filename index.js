@@ -15,32 +15,31 @@ function Timer() {
 
 function UI() {
 
-    this.updateLabel = function(timer, element) {
-        return window.setInterval(function() {
-            element.innerHTML = timer.getTime();
-        }, 1);
-    };
-
 }
+
+UI.prototype.updateLabel = function(timer, element) {
+    return window.setInterval(function() {
+        element.innerHTML = timer.getTime();
+    }, 1);
+};
 
 window.addEventListener("load", function() {
 
     var timer = new Timer();
     var timerUI = new UI();
 
-    var $btn_resume = document.getElementById("ui-resume");
-    var $btn_stop = document.getElementById("ui-stop");
-    var $lbl_time = document.getElementById("ui-time");
+    var $btnResume = document.getElementById("ui-resume");
+    var $btnStop = document.getElementById("ui-stop");
+    var $lblTime = document.getElementById("ui-time");
 
-    var interval = window.setInterval(function() { $lbl_time.innerHTML = timer.getTime(); }, 1);
+    var interval = timerUI.updateLabel( timer, $lblTime );
 
-    $btn_stop.addEventListener("click", function() {
+    $btnStop.addEventListener("click", function() {
         window.clearInterval(interval);
     });
 
-    $btn_resume.addEventListener("click", function() {
-        interval = window.setInterval(function() { $lbl_time.innerHTML = timer.getTime(); }, 1);
-
+    $btnResume.addEventListener("click", function() {
+        interval = timerUI.updateLabel( timer, $lblTime );
     });
 
 });
