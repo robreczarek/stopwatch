@@ -1,46 +1,57 @@
-'use strict';
+(function () {
+    'use strict';
 
-function Timer() {
+    function Timer() {
+    }
 
-    this.getTime = function() {
+    Timer.prototype.getTime = function () {
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var seconds = date.getSeconds();
         var milliseconds = date.getMilliseconds();
-        var time = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-        return time;
+
+        // TODO(piecioshka): when hour is less then 0 try add '0' before number (the same in minutes and seconds).
+
+        return hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
     };
 
-}
+    // -----------------------------------------------------------------------
 
-function UI() {
+    function UI() {
+    }
 
-}
+    UI.prototype.updateLabel = function (timer, $element) {
+        return window.setInterval(function () {
+            $element.innerHTML = timer.getTime();
+        }, 1);
+    };
 
-UI.prototype.updateLabel = function(timer, element) {
-    return window.setInterval(function() {
-        element.innerHTML = timer.getTime();
-    }, 1);
-};
+    UI.prototype.setup = function (timer) {
+        var self = this;
 
-window.addEventListener("load", function() {
+        var $btnResume = document.querySelector('#ui-resume');
+        var $btnStop = document.querySelector('#ui-stop');
+        var $timeLabel = document.querySelector('#ui-time');
 
-    var timer = new Timer();
-    var timerUI = new UI();
+        var interval = this.updateLabel(timer, $timeLabel);
 
-    var $btnResume = document.getElementById("ui-resume");
-    var $btnStop = document.getElementById("ui-stop");
-    var $lblTime = document.getElementById("ui-time");
+        $btnStop.addEventListener('click', function () {
+            window.clearInterval(interval);
+        });
 
-    var interval = timerUI.updateLabel( timer, $lblTime );
+        $btnResume.addEventListener('click', function () {
+            interval = self.updateLabel(timer, $timeLabel);
+        });
+    };
 
-    $btnStop.addEventListener("click", function() {
-        window.clearInterval(interval);
-    });
+    // -----------------------------------------------------------------------
 
-    $btnResume.addEventListener("click", function() {
-        interval = timerUI.updateLabel( timer, $lblTime );
-    });
+    function bootstrap() {
+        var timer = new Timer();
+        var ui = new UI();
+        ui.setup(timer);
+    }
 
-});
+    window.addEventListener('load', bootstrap);
+}());
